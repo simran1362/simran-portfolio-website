@@ -94,7 +94,7 @@ const Navbar = () => {
               letterSpacing: '0.05em',
             }}
           >
-            SIMRAN BARDHAN
+            SOFTWARE DEVELOPER
           </Typography>
 
           {isMobile ? (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Typography, Button, Container, IconButton } from '@mui/material';
 import { GitHub, LinkedIn, Email } from '@mui/icons-material';
+import TechElements from '../TechElements';
 
 const Hero = () => {
   return (
@@ -17,7 +18,6 @@ const Hero = () => {
       <Container maxWidth="false" sx={{ position: 'relative', zIndex: 1 }}>
         <Box
           sx={{
-            background: 'radial-gradient(circle at 70% 50%, #9ACD32 5%, #ffffff 30%)',
             padding: '90px 40px',
             position: 'relative',
             minHeight: '70vh',
@@ -26,6 +26,8 @@ const Hero = () => {
             justifyContent: 'space-between',
           }}
         >
+          {/* Add 3D Tech Elements */}
+          <TechElements />
           {/* Social Media Icons - Left Side */}
           <Box
             sx={{
@@ -37,6 +39,7 @@ const Hero = () => {
               flexDirection: 'column',
               gap: 2,
               alignItems: 'center',
+              zIndex: 2,
             }}
           >
             <Typography
@@ -98,7 +101,7 @@ const Hero = () => {
           </Box>
 
           {/* Main Content */}
-          <Box sx={{ textAlign: 'left', maxWidth: '1000px', ml: 8 }}>
+          <Box sx={{ textAlign: 'left', maxWidth: '1000px', ml: 8, position: 'relative', zIndex: 2 }}>
             <Typography
               variant="h1"
               sx={{
@@ -109,21 +112,21 @@ const Hero = () => {
                 mb: 4,
               }}
             >
-              Hi, I'm a {' '}
+              Hi, I'm {' '} <br/>
               <Box
                 component="span"
                 sx={{
                   background: '#000000',
-                  color: '#FFFFFF',
-                  px: 2,
+                  color: '#ffffff',
                   py: 0.05,
+                  px: 2,
                   borderRadius: '8px',
                   display: 'inline-block',
                 }}
               >
-                Software
+                Simran
               </Box>{' '}
-              Developer
+              Bardhan
             </Typography>
             {/* <Typography
               variant="h1"
