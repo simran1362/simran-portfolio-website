@@ -26,53 +26,6 @@ const Experience = () => {
       }}
     >
       <Container maxWidth="xl">
-        {/* About Button - Top Right */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 40,
-            right: 40,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Box
-            sx={{
-              width: '40px',
-              height: '40px',
-              border: '2px solid #000000',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'transparent',
-            }}
-          >
-            <Typography sx={{ color: '#000000', fontSize: '1.2rem', fontWeight: 'bold' }}>
-              +
-            </Typography>
-          </Box>
-          <Button
-            sx={{
-              border: '2px solid #000000',
-              borderRadius: '25px',
-              color: '#000000',
-              px: 3,
-              py: 1,
-              textTransform: 'none',
-              fontSize: '16px',
-              fontWeight: 500,
-              backgroundColor: 'transparent',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              },
-            }}
-          >
-            About
-          </Button>
-        </Box>
-
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -367,40 +320,6 @@ const Experience = () => {
             >
               {/* Header */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
-                <Box
-                  sx={{
-                    width: '40px',
-                    height: '40px',
-                    border: '2px solid #FFFFFF',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    backgroundColor: 'transparent',
-                  }}
-                >
-                  <Typography sx={{ color: '#FFFFFF', fontSize: '1.2rem', fontWeight: 'bold' }}>
-                    +
-                  </Typography>
-                </Box>
-                <Button
-                  sx={{
-                    border: '2px solid #FFFFFF',
-                    borderRadius: '25px',
-                    color: '#FFFFFF',
-                    px: 3,
-                    py: 1,
-                    textTransform: 'none',
-                    fontSize: '16px',
-                    fontWeight: 500,
-                    backgroundColor: 'transparent',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    },
-                  }}
-                >
-                  Work Process
-                </Button>
                 <Typography
                   variant="h2"
                   sx={{

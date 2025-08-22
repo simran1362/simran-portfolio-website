@@ -11,15 +11,22 @@ import {
   ListItem,
   ListItemText,
   useMediaQuery,
-  useTheme,
+  useTheme as useMuiTheme,
 } from '@mui/material';
-import { Menu as MenuIcon, Close as CloseIcon } from '@mui/icons-material';
+import { 
+  Menu as MenuIcon, 
+  Close as CloseIcon,
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon
+} from '@mui/icons-material';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { isDarkMode, toggleTheme, theme } = useTheme();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
 
   const navItems = [
     { name: 'Home', to: '#hero' },
@@ -45,8 +52,19 @@ const Navbar = () => {
 
   const drawer = (
     <Box sx={{ width: 250, height: '100%', bgcolor: 'background.paper' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-        <IconButton onClick={handleDrawerToggle}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
+        <IconButton
+          onClick={toggleTheme}
+          sx={{
+            color: 'text.primary',
+            '&:hover': {
+              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+            },
+          }}
+        >
+          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
+        <IconButton onClick={handleDrawerToggle} sx={{ color: 'text.primary' }}>
           <CloseIcon />
         </IconButton>
       </Box>
@@ -61,8 +79,21 @@ const Navbar = () => {
               }
               setMobileOpen(false);
             }}
+            sx={{
+              '&:hover': {
+                backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+              },
+            }}
           >
-            <ListItemText primary={item.name} />
+            <ListItemText 
+              primary={item.name} 
+              sx={{ 
+                color: 'text.primary',
+                '& .MuiListItemText-primary': {
+                  fontWeight: 600,
+                }
+              }} 
+            />
           </ListItem>
         ))}
       </List>
@@ -74,11 +105,11 @@ const Navbar = () => {
       <AppBar
         position="fixed"
         sx={{
-          bgcolor: '#ffffff',
-          backdropFilter: 'none',
+          bgcolor: 'background.paper',
+          backdropFilter: 'blur(10px)',
           transition: 'all 0.3s ease',
-          boxShadow: 'none',
-          borderBottom: 'none',
+          boxShadow: isDarkMode ? '0 2px 10px rgba(255, 255, 255, 0.1)' : '0 2px 10px rgba(0, 0, 0, 0.1)',
+          borderBottom: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
         }}
       >
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 4 }, py: 2 }}>
@@ -90,7 +121,7 @@ const Navbar = () => {
             sx={{
               fontWeight: 700,
               fontSize: '1.5rem',
-              color: '#000000',
+              color: 'text.primary',
               letterSpacing: '0.05em',
             }}
           >
@@ -98,14 +129,28 @@ const Navbar = () => {
           </Typography>
 
           {isMobile ? (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-            >
-              <MenuIcon />
-            </IconButton>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  color: 'text.primary',
+                  '&:hover': {
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+                  },
+                }}
+              >
+                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ color: 'text.primary' }}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Box>
           ) : (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
               <Box sx={{ display: 'flex', gap: 4 }}>
@@ -128,7 +173,7 @@ const Navbar = () => {
                       sx={{
                         fontSize: '1rem',
                         fontWeight: 600,
-                        color: '#000000',
+                        color: 'text.primary',
                         textTransform: 'none',
                         textDecoration: 'none',
                         position: 'relative',
@@ -138,7 +183,7 @@ const Navbar = () => {
                         transition: '0.4s',
                         '&:hover': {
                           backgroundColor: 'transparent',
-                          borderBottom: '2px solid #000',
+                          borderBottom: `2px solid ${theme.palette.text.primary}`,
                           transform: 'translateY(-5px)',
                         },
                         '&:active': {
@@ -153,41 +198,30 @@ const Navbar = () => {
                 ))}
               </Box>
               
-              <Button
-                variant="contained"
-                onClick={() => window.open('mailto:simranbardhan13@gmail.com', '_blank')}
+              <IconButton
+                onClick={toggleTheme}
                 sx={{
-                  background: '#000000',
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, #FF1B8D 0%, #FF6B35 100%)' 
+                    : 'linear-gradient(135deg, #000000 0%, #333333 100%)',
                   color: '#FFFFFF',
-                  fontWeight: 500,
-                  fontSize: '1rem',
-                  textTransform: 'none',
-                  px: 3,
-                  py: 1.5,
-                  borderRadius: '30px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  border: '2px solid #000000',
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
+                  transition: 'all 0.3s ease',
                   '&:hover': {
-                    background: '#333333',
+                    background: isDarkMode 
+                      ? 'linear-gradient(135deg, #E6186F 0%, #E55A2B 100%)' 
+                      : 'linear-gradient(135deg, #333333 0%, #555555 100%)',
+                    transform: 'translateY(-2px)',
+                    boxShadow: isDarkMode 
+                      ? '0 10px 30px rgba(255, 27, 141, 0.4)' 
+                      : '0 10px 30px rgba(0, 0, 0, 0.3)',
                   },
                 }}
               >
-                <Box
-                  sx={{
-                    width: '24px',
-                    height: '24px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    mr: 1,
-                  }}
-                >
-                  <Typography sx={{ color: '#FFFFFF', fontSize: '1rem' }}>→</Typography>
-                </Box>
-                Hire Me
-              </Button>
+                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
             </Box>
           )}
         </Toolbar>

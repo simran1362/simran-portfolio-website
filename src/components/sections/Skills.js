@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Typography, Container, Grid, Card, Button } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Skills = () => {
+  const { isDarkMode } = useTheme();
+  
   const skills = [
     {
       title: 'MERN Stack',
@@ -96,7 +99,7 @@ const Skills = () => {
       sx={{
         m: 2,
         px: 2,
-        backgroundColor: '#000000',
+        backgroundColor: isDarkMode ? '#000000' : '#f8f9fa',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
@@ -106,7 +109,7 @@ const Skills = () => {
       <Container maxWidth="xl">
         <Box
           sx={{
-            backgroundColor: '#000000',
+            backgroundColor: isDarkMode ? '#000000' : '#f8f9fa',
             borderRadius: '40px',
             p: 6,
             position: 'relative',
@@ -116,9 +119,9 @@ const Skills = () => {
           <Box sx={{ mb: 4 }}>
             <Button
               sx={{
-                border: '2px solid white',
+                border: isDarkMode ? '2px solid white' : '2px solid #000000',
                 borderRadius: '25px',
-                color: 'white',
+                color: isDarkMode ? 'white' : '#000000',
                 px: 3,
                 py: 1,
                 textTransform: 'none',
@@ -126,7 +129,9 @@ const Skills = () => {
                 fontWeight: 400,
                 backgroundColor: 'transparent',
                 '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  backgroundColor: isDarkMode 
+                    ? 'rgba(255, 255, 255, 0.1)' 
+                    : 'rgba(0, 0, 0, 0.1)',
                 },
                 '&::before': {
                   content: '"✓"',
@@ -153,7 +158,7 @@ const Skills = () => {
                   sx={{
                     fontWeight: 700,
                     fontSize: { xs: '3rem', md: '4.5rem', lg: '5.5rem' },
-                    color: 'white',
+                    color: isDarkMode ? 'white' : '#000000',
                     lineHeight: 1.1,
                     mb: 6,
                     fontFamily: '"Inter", sans-serif',
@@ -175,7 +180,7 @@ const Skills = () => {
                       >
                         <Card
                           sx={{
-                            backgroundColor: '#1a1a1a',
+                            backgroundColor: isDarkMode ? '#1a1a1a' : '#ffffff',
                             borderRadius: '20px',
                             p: 3,
                             height: '280px',
@@ -183,24 +188,36 @@ const Skills = () => {
                             flexDirection: 'column',
                             alignItems: 'flex-start',
                             justifyContent: 'flex-start',
-                            border: 'none',
-                            boxShadow: 'none',
+                            border: isDarkMode ? 'none' : '1px solid #e0e0e0',
+                            boxShadow: isDarkMode 
+                              ? 'none' 
+                              : '0 4px 20px rgba(0, 0, 0, 0.1)',
                             transition: 'all 0.3s ease',
                             '&:hover': {
                               transform: 'rotate(10deg)',
-                              backgroundColor: '#2a2a2a',
+                              backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
+                              boxShadow: isDarkMode 
+                                ? 'none' 
+                                : '0 8px 30px rgba(0, 0, 0, 0.15)',
                             },
                           }}
                         >
                           <Box>
-                            {skill.icon}
+                            <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                              <circle cx="50" cy="50" r="3" fill="#9ACD32" />
+                              <g stroke={isDarkMode ? "white" : "#000000"} strokeWidth="2" fill="none">
+                                <ellipse cx="50" cy="50" rx="25" ry="10" />
+                                <ellipse cx="50" cy="50" rx="25" ry="10" transform="rotate(60 50 50)" />
+                                <ellipse cx="50" cy="50" rx="25" ry="10" transform="rotate(120 50 50)" />
+                              </g>
+                            </svg>
                           </Box>
                           
                           <Box>
                             <Typography
                               variant="h4"
                               sx={{
-                                color: 'white',
+                                color: isDarkMode ? 'white' : '#000000',
                                 fontWeight: 600,
                                 fontSize: '1.5rem',
                                 mb: 2,
@@ -213,7 +230,7 @@ const Skills = () => {
                             <Typography
                               variant="body2"
                               sx={{
-                                color: '#888888',
+                                color: isDarkMode ? '#888888' : '#666666',
                                 fontSize: '0.9rem',
                                 lineHeight: 1.6,
                                 fontFamily: '"Inter", sans-serif',
@@ -252,7 +269,7 @@ const Skills = () => {
                   <Typography
                     variant="h5"
                     sx={{
-                      color: '#888888',
+                      color: isDarkMode ? '#888888' : '#666666',
                       fontSize: { xs: '1.1rem', md: '1.3rem' },
                       lineHeight: 1.6,
                       mb: 4,
@@ -276,7 +293,7 @@ const Skills = () => {
                       sx={{
                         width: '50px',
                         height: '50px',
-                        border: '2px solid #333333',
+                        border: isDarkMode ? '2px solid #333333' : '2px solid #cccccc',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -290,14 +307,14 @@ const Skills = () => {
                       }}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M15 18L9 12L15 6" stroke={isDarkMode ? "white" : "#000000"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Box>
                     <Box
                       sx={{
                         width: '50px',
                         height: '50px',
-                        border: '2px solid #333333',
+                        border: isDarkMode ? '2px solid #333333' : '2px solid #cccccc',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -311,7 +328,7 @@ const Skills = () => {
                       }}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M9 18L15 12L9 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M9 18L15 12L9 6" stroke={isDarkMode ? "white" : "#000000"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </Box>
                   </Box>

@@ -11,8 +11,10 @@ import {
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { Email, Phone, LocationOn, Send } from '@mui/icons-material';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const Contact = () => {
+  const { isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -73,7 +75,7 @@ const Contact = () => {
       sx={{
         py: 8,
         px: 4,
-        backgroundColor: '#000000',
+        backgroundColor: isDarkMode ? '#000000' : '#ffffff',
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
@@ -81,53 +83,6 @@ const Contact = () => {
       }}
     >
       <Container maxWidth="xl">
-        {/* Contact Button - Top Right */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 40,
-            right: 40,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Box
-            sx={{
-              width: '40px',
-              height: '40px',
-              border: '2px solid #9ACD32',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'transparent',
-            }}
-          >
-            <Typography sx={{ color: '#9ACD32', fontSize: '1.2rem', fontWeight: 'bold' }}>
-              +
-            </Typography>
-          </Box>
-          <Button
-            sx={{
-              border: '2px solid #9ACD32',
-              borderRadius: '25px',
-              color: '#9ACD32',
-              px: 3,
-              py: 1,
-              textTransform: 'none',
-              fontSize: '16px',
-              fontWeight: 500,
-              backgroundColor: 'transparent',
-              '&:hover': {
-                backgroundColor: 'rgba(154, 205, 50, 0.1)',
-              },
-            }}
-          >
-            Contact
-          </Button>
-        </Box>
-
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -141,7 +96,7 @@ const Contact = () => {
               sx={{
                 fontWeight: 700,
                 fontSize: { xs: '3rem', md: '5rem', lg: '6rem' },
-                color: '#FFFFFF',
+                color: isDarkMode ? '#FFFFFF' : '#000000',
                 lineHeight: 1.1,
                 mb: 4,
                 fontFamily: '"Inter", sans-serif',
@@ -183,7 +138,7 @@ const Contact = () => {
             <Typography
               variant="h6"
               sx={{
-                color: '#CCCCCC',
+                color: isDarkMode ? '#CCCCCC' : '#666666',
                 fontSize: { xs: '1rem', md: '1.2rem' },
                 lineHeight: 1.6,
                 maxWidth: '800px',

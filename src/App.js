@@ -1,6 +1,7 @@
 import React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import Navbar from './components/Navbar';
 import Hero from './components/sections/Hero';
 import Skills from './components/sections/Skills';
@@ -10,44 +11,11 @@ import Contact from './components/sections/Contact';
 import Footer from './components/sections/Footer';
 import './App.css';
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#000000',
-    },
-    secondary: {
-      main: '#9ACD32',
-    },
-    background: {
-      default: '#ffffff',
-      paper: '#FFFFFF',
-    },
-    text: {
-      primary: '#000000',
-      secondary: '#666666',
-    },
-  },
-  typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
-    h1: {
-      fontWeight: 700,
-      fontSize: '4rem',
-    },
-    h2: {
-      fontWeight: 600,
-      fontSize: '3rem',
-    },
-    h3: {
-      fontWeight: 600,
-      fontSize: '2rem',
-    },
-  },
-});
-
-function App() {
+function AppContent() {
+  const { theme } = useTheme();
+  
   return (
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
         <Navbar />
@@ -58,6 +26,14 @@ function App() {
         <Contact />
         <Footer />
       </div>
+    </MuiThemeProvider>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

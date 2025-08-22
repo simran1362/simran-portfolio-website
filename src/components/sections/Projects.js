@@ -112,53 +112,6 @@ const Projects = () => {
       }}
     >
       <Container maxWidth="xl">
-        {/* Projects Button - Top Right */}
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 40,
-            right: 40,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-          }}
-        >
-          <Box
-            sx={{
-              width: '40px',
-              height: '40px',
-              border: '2px solid #000000',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'transparent',
-            }}
-          >
-            <Typography sx={{ color: '#000000', fontSize: '1.2rem', fontWeight: 'bold' }}>
-              +
-            </Typography>
-          </Box>
-          <Button
-            sx={{
-              border: '2px solid #000000',
-              borderRadius: '25px',
-              color: '#000000',
-              px: 3,
-              py: 1,
-              textTransform: 'none',
-              fontSize: '16px',
-              fontWeight: 500,
-              backgroundColor: 'transparent',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              },
-            }}
-          >
-            Projects
-          </Button>
-        </Box>
-
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -183,7 +136,7 @@ const Projects = () => {
                 component="span"
                 sx={{
                   backgroundColor: '#000000',
-                  color: '#9ACD32',
+                  color: '#fff',
                   px: 2,
                   py: 1,
                   borderRadius: '10px',
@@ -192,22 +145,6 @@ const Projects = () => {
                 }}
               >
                 Projects
-              </Box>
-              <br />
-              & Creative{' '}
-              <Box
-                component="span"
-                sx={{
-                  backgroundColor: '#000000',
-                  color: '#9ACD32',
-                  px: 2,
-                  py: 1,
-                  borderRadius: '10px',
-                  display: 'inline-block',
-                  mx: 1,
-                }}
-              >
-                Work
               </Box>
             </Typography>
 

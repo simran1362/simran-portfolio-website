@@ -1,15 +1,18 @@
 import React from 'react';
 import { Box, Typography, Button, Container, IconButton } from '@mui/material';
 import { GitHub, LinkedIn, Email } from '@mui/icons-material';
+import { useTheme } from '../../contexts/ThemeContext';
 import TechElements from '../TechElements';
 
 const Hero = () => {
+  const { isDarkMode } = useTheme();
+
   return (
     <Box
       id="hero"
       sx={{
         minHeight: '100vh',
-        background: '#ffffff',
+        background: 'background.default',
         position: 'relative',
         overflow: 'hidden',
         pt: 12,
@@ -47,7 +50,7 @@ const Hero = () => {
                 writingMode: 'vertical-rl',
                 textOrientation: 'mixed',
                 fontSize: '0.9rem',
-                color: '#000000',
+                color: 'text.primary',
                 fontWeight: 500,
                 mb: 2,
               }}
@@ -57,11 +60,13 @@ const Hero = () => {
             <IconButton
               onClick={() => window.open('https://github.com/simran1362', '_blank')}
               sx={{
-                color: '#000000',
+                color: 'text.primary',
                 width: '32px',
                 height: '32px',
                 mb: 1,
-                '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' }
+                '&:hover': { 
+                  backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' 
+                }
               }}
             >
               <GitHub fontSize="small" />
@@ -69,11 +74,13 @@ const Hero = () => {
             <IconButton
               onClick={() => window.open('https://www.linkedin.com/in/simran-bardhan/', '_blank')}
               sx={{
-                color: '#000000',
+                color: 'text.primary',
                 width: '32px',
                 height: '32px',
                 mb: 1,
-                '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' }
+                '&:hover': { 
+                  backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' 
+                }
               }}
             >
               <LinkedIn fontSize="small" />
@@ -81,11 +88,13 @@ const Hero = () => {
             <IconButton
               onClick={() => window.open('mailto:simranbardhan13@gmail.com', '_blank')}
               sx={{
-                color: '#000000',
+                color: 'text.primary',
                 width: '32px',
                 height: '32px',
                 mb: 1,
-                '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' }
+                '&:hover': { 
+                  backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' 
+                }
               }}
             >
               <Email fontSize="small" />
@@ -94,7 +103,7 @@ const Hero = () => {
               sx={{
                 width: '2px',
                 height: '60px',
-                background: '#000000',
+                background: 'text.primary',
                 mt: 2,
               }}
             />
@@ -107,17 +116,20 @@ const Hero = () => {
               sx={{
                 fontWeight: 700,
                 fontSize: { xs: '3rem', md: '5rem', lg: '6rem' },
-                color: '#000000',
+                color: 'text.primary',
                 lineHeight: 1.2,
                 mb: 4,
               }}
             >
-              Hi, I'm {' '} <br/>
+              Hi, I'm{' '}
+              <br/>
               <Box
                 component="span"
                 sx={{
-                  background: '#000000',
-                  color: '#ffffff',
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, #FF1B8D 0%, #FF6B35 100%)' 
+                    : '#000',
+                  color: isDarkMode ? '#ffffff' : 'background.default',
                   py: 0.05,
                   px: 2,
                   borderRadius: '8px',
@@ -128,43 +140,22 @@ const Hero = () => {
               </Box>{' '}
               Bardhan
             </Typography>
-            {/* <Typography
-              variant="h1"
-              sx={{
-                fontWeight: 700,
-                fontSize: { xs: '2.5rem', md: '4rem', lg: '5rem' },
-                color: '#000000',
-                lineHeight: 1.1,
-                mb: 6,
-              }}
-            >
-              Software{' '}
-              <Box
-                component="span"
-                sx={{
-                  background: '#000000',
-                  color: '#FFFFFF',
-                  px: 2,
-                  py: 1,
-                  borderRadius: '8px',
-                  display: 'inline-block',
-                }}
-              >
-                Developer
-              </Box>
-            </Typography> */}
+            
             <Typography
               variant="body1"
               sx={{
                 fontSize: '1.1rem',
-                color: '#000000',
+                color: 'text.primary',
                 lineHeight: 1.6,
                 mb: 1,
                 maxWidth: '600px',
               }}
             >
               Specializing in{' '}
-              <Box component="span" sx={{ textDecoration: 'underline' }}>
+              <Box component="span" sx={{ 
+                textDecoration: 'underline',
+                color: isDarkMode ? '#9ACD32' : 'text.primary'
+              }}>
                 MERN Stack
               </Box>
               , Next.js, and UI/UX Design.
@@ -173,7 +164,7 @@ const Hero = () => {
               variant="body1"
               sx={{
                 fontSize: '1.1rem',
-                color: '#000000',
+                color: 'text.secondary',
                 lineHeight: 1.6,
                 mb: 4,
                 maxWidth: '600px',
@@ -187,8 +178,10 @@ const Hero = () => {
                 variant="outlined"
                 onClick={() => window.open('mailto:simranbardhan13@gmail.com', '_blank')}
                 sx={{
-                  background: '#FFFFFF',
-                  color: '#000000',
+                  background: isDarkMode 
+                    ? 'linear-gradient(135deg, #FF1B8D 0%, #FF6B35 100%)' 
+                    : 'background.default',
+                  color: isDarkMode ? '#FFFFFF' : 'text.primary',
                   fontWeight: 500,
                   fontSize: '1rem',
                   textTransform: 'none',
@@ -198,11 +191,19 @@ const Hero = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 1,
-                  border: '2px solid #000000',
+                  border: isDarkMode 
+                    ? '2px solid transparent' 
+                    : '2px solid',
+                  borderColor: 'text.primary',
                   '&:hover': {
-                    background: '#000000',
-                    color: '#FFFFFF',
-                    border: '2px solid #000',
+                    background: isDarkMode 
+                      ? 'linear-gradient(135deg, #E6186F 0%, #E55A2B 100%)' 
+                      : 'text.primary',
+                    color: isDarkMode ? '#FFFFFF' : 'background.default',
+                    transform: 'translateY(-2px)',
+                    boxShadow: isDarkMode 
+                      ? '0 10px 30px rgba(255, 27, 141, 0.4)' 
+                      : '0 10px 30px rgba(0, 0, 0, 0.3)',
                   },
                 }}
               >
@@ -215,18 +216,22 @@ const Hero = () => {
                 onClick={() => window.open('https://fyle-internship-challenge-theta.vercel.app/', '_blank')}
                 sx={{
                   background: 'transparent',
-                  color: '#000000',
+                  color: 'text.primary',
                   fontWeight: 500,
                   fontSize: '1rem',
                   textTransform: 'none',
                   px: 4,
                   py: 2,
                   borderRadius: '30px',
-                  border: '2px solid #000000',
+                  border: '2px solid',
+                  borderColor: 'text.primary',
                   '&:hover': {
-                    background: '#000000',
-                    color: '#FFFFFF',
-                    border: '2px solid #000',
+                    background: 'text.primary',
+                    color: 'background.default',
+                    transform: 'translateY(-2px)',
+                    boxShadow: isDarkMode 
+                      ? '0 10px 30px rgba(255, 255, 255, 0.3)' 
+                      : '0 10px 30px rgba(0, 0, 0, 0.3)',
                   },
                 }}
               >
