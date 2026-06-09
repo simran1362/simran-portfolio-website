@@ -1,0 +1,46 @@
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowUp } from 'react-icons/fa';
+
+const ScrollToTop = () => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(window.scrollY > window.innerHeight * 0.6);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.button
+          type="button"
+          aria-label="Back to top"
+          onClick={handleClick}
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.9 }}
+          whileHover={{ y: -3, scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+          className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 group"
+        >
+          <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-black text-accent shadow-card border-2 border-black dark:border-accent overflow-hidden">
+            <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+            <FaArrowUp className="relative w-4 h-4 md:w-5 md:h-5 group-hover:text-black transition-colors duration-300" />
+          </span>
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default ScrollToTop;

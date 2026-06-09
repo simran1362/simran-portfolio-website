@@ -1,75 +1,58 @@
 import React from 'react';
-import { Box, Typography, Container, Avatar } from '@mui/material';
 import { motion } from 'framer-motion';
 
-const Customers = () => {
-  const customers = [
-    {
-      id: 1,
-      avatar: '👨‍💼',
-      name: 'John Smith',
-      role: 'CEO, TechCorp',
-      testimonial: 'Outstanding work quality and attention to detail.',
-    },
-    {
-      id: 2,
-      avatar: '👩‍💻',
-      name: 'Sarah Johnson',
-      role: 'Product Manager',
-      testimonial: 'Delivered exactly what we needed, on time.',
-    },
-    {
-      id: 3,
-      avatar: '👨‍🎨',
-      name: 'Mike Davis',
-      role: 'Creative Director',
-      testimonial: 'Exceptional design skills and creativity.',
-    },
-  ];
+const customers = [
+  {
+    id: 1,
+    avatar: '👨‍💼',
+    name: 'John Smith',
+    role: 'CEO, TechCorp',
+    testimonial: 'Outstanding work quality and attention to detail.',
+    gradient: 'linear-gradient(135deg, #FF1B8D, #FF6B35)',
+  },
+  {
+    id: 2,
+    avatar: '👩‍💻',
+    name: 'Sarah Johnson',
+    role: 'Product Manager',
+    testimonial: 'Delivered exactly what we needed, on time.',
+    gradient: 'linear-gradient(135deg, #00D4FF, #8B5CF6)',
+  },
+  {
+    id: 3,
+    avatar: '👨‍🎨',
+    name: 'Mike Davis',
+    role: 'Creative Director',
+    testimonial: 'Exceptional design skills and creativity.',
+    gradient: 'linear-gradient(135deg, #10B981, #F59E0B)',
+  },
+];
 
+const Customers = () => {
   return (
-    <Box
+    <section
       id="customers"
-      sx={{
-        py: 10,
+      className="py-24 relative"
+      style={{
         background: `
           radial-gradient(circle at 30% 40%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
           radial-gradient(circle at 70% 60%, rgba(255, 27, 141, 0.1) 0%, transparent 50%),
           #0A0A0A
         `,
-        position: 'relative',
       }}
     >
-      <Container maxWidth="xl">
-        <motion.div
+      <div className="max-w-[1536px] mx-auto px-6 md:px-10">
+        <motion.h2
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
+          className="font-bold text-4xl md:text-6xl text-white text-center mb-16"
         >
-          <Typography
-            variant="h2"
-            sx={{
-              fontWeight: 700,
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
-              color: '#FFFFFF',
-              textAlign: 'center',
-              mb: 8,
-            }}
-          >
-            Client Testimonials
-          </Typography>
-        </motion.div>
+          Client Testimonials
+        </motion.h2>
 
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 4,
-            flexWrap: 'wrap',
-          }}
-        >
+        <div className="flex flex-wrap justify-center items-start gap-10">
           {customers.map((customer, index) => (
             <motion.div
               key={customer.id}
@@ -77,71 +60,29 @@ const Customers = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
               viewport={{ once: true }}
+              className="flex flex-col items-center p-6 max-w-xs"
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  p: 3,
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center text-3xl mb-3"
+                style={{
+                  background: customer.gradient,
+                  boxShadow: '0 10px 30px rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <Avatar
-                  sx={{
-                    width: 80,
-                    height: 80,
-                    background: `linear-gradient(135deg, 
-                      ${index === 0 ? '#FF1B8D, #FF6B35' : 
-                        index === 1 ? '#00D4FF, #8B5CF6' : 
-                        '#10B981, #F59E0B'})`,
-                    fontSize: '2rem',
-                    mb: 2,
-                    boxShadow: '0 10px 30px rgba(255, 255, 255, 0.1)',
-                  }}
-                >
-                  {customer.avatar}
-                </Avatar>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    color: '#FFFFFF',
-                    fontSize: '1rem',
-                    fontWeight: 600,
-                    textAlign: 'center',
-                    mb: 0.5,
-                  }}
-                >
-                  {customer.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: '#B0B0B0',
-                    fontSize: '0.8rem',
-                    textAlign: 'center',
-                    mb: 1,
-                  }}
-                >
-                  {customer.role}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: '#B0B0B0',
-                    fontSize: '0.9rem',
-                    textAlign: 'center',
-                    fontStyle: 'italic',
-                    maxWidth: '200px',
-                  }}
-                >
-                  "{customer.testimonial}"
-                </Typography>
-              </Box>
+                {customer.avatar}
+              </div>
+              <h4 className="text-white text-base font-semibold text-center mb-1">
+                {customer.name}
+              </h4>
+              <p className="text-neutral-400 text-xs text-center mb-2">{customer.role}</p>
+              <p className="text-neutral-400 text-sm text-center italic max-w-[200px]">
+                "{customer.testimonial}"
+              </p>
             </motion.div>
           ))}
-        </Box>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </section>
   );
 };
 

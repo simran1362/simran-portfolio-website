@@ -1,243 +1,175 @@
 import { useState, useEffect } from 'react';
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  useTheme as useMuiTheme,
-} from '@mui/material';
-import { 
-  Menu as MenuIcon, 
-  Close as CloseIcon,
-  LightMode as LightModeIcon,
-  DarkMode as DarkModeIcon
-} from '@mui/icons-material';
+import { motion, AnimatePresence } from 'framer-motion';
+import { HiMenu, HiX, HiSun, HiMoon } from 'react-icons/hi';
+import { FaArrowRight } from 'react-icons/fa';
 import { useTheme } from '../contexts/ThemeContext';
+
+const navItems = [
+  { name: 'Home', to: '#hero' },
+  { name: 'Skills', to: '#skills' },
+  { name: 'Projects', to: '#projects' },
+  { name: 'Experience', to: '#experience' },
+  { name: 'Contact', to: '#contact' },
+];
+
+const scrollTo = (selector) => {
+  const el = document.querySelector(selector);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { isDarkMode, toggleTheme, theme } = useTheme();
-  const muiTheme = useMuiTheme();
-  const isMobile = useMediaQuery(muiTheme.breakpoints.down('md'));
-
-  const navItems = [
-    { name: 'Home', to: '#hero' },
-    { name: 'Skills', to: '#skills' },
-    { name: 'Projects', to: '#projects' },
-    { name: 'Experience', to: '#experience' },
-    { name: 'Contact', to: '#contact' },
-  ];
+  const { isDarkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      setScrolled(isScrolled);
+    const handleScroll = () => setScrolled(window.scrollY > 30);
+    const handleResize = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
-  const drawer = (
-    <Box sx={{ width: 250, height: '100%', bgcolor: 'background.paper' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1 }}>
-        <IconButton
-          onClick={toggleTheme}
-          sx={{
-            color: 'text.primary',
-            '&:hover': {
-              backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-            },
-          }}
-        >
-          {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
-        </IconButton>
-        <IconButton onClick={handleDrawerToggle} sx={{ color: 'text.primary' }}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <List>
-        {navItems.map((item) => (
-          <ListItem 
-            key={item.name}
-            onClick={() => {
-              const element = document.querySelector(item.to);
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-              }
-              setMobileOpen(false);
-            }}
-            sx={{
-              '&:hover': {
-                backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-              },
-            }}
-          >
-            <ListItemText 
-              primary={item.name} 
-              sx={{ 
-                color: 'text.primary',
-                '& .MuiListItemText-primary': {
-                  fontWeight: 600,
-                }
-              }} 
-            />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
 
   return (
     <>
-      <AppBar
-        position="fixed"
-        sx={{
-          bgcolor: 'background.paper',
-          backdropFilter: 'blur(10px)',
-          transition: 'all 0.3s ease',
-          boxShadow: isDarkMode ? '0 2px 10px rgba(255, 255, 255, 0.1)' : '0 2px 10px rgba(0, 0, 0, 0.1)',
-          borderBottom: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
-        }}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md border-b border-black/5 dark:border-white/10'
+            : 'bg-transparent border-b border-transparent'
+        }`}
       >
-        <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 4 }, py: 2 }}>
-          {/* Logo */}
-          <Typography
-            variant="h6"
-            component="div"
-            fontFamily="Nunito"
-            sx={{
-              fontWeight: 700,
-              fontSize: '1.5rem',
-              color: 'text.primary',
-              letterSpacing: '0.05em',
-            }}
+        <div className="section-shell flex items-center justify-between px-5 md:px-10 py-4">
+          <button
+            onClick={() => scrollTo('#hero')}
+            className="font-nunito font-extrabold text-lg md:text-xl tracking-tight text-black dark:text-white"
           >
-            SOFTWARE DEVELOPER
-          </Typography>
+            SIMRAN<span className="text-accent">.</span>BARDHAN
+          </button>
 
-          {isMobile ? (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <IconButton
-                onClick={toggleTheme}
-                sx={{
-                  color: 'text.primary',
-                  '&:hover': {
-                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  },
-                }}
-              >
-                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ color: 'text.primary' }}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
-          ) : (
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <Box sx={{ display: 'flex', gap: 4 }}>
-                {navItems.map((item) => (
-                  <Box
-                    key={item.name}
-                    sx={{
-                      position: 'relative',
-                      display: 'inline-block',
-                    }}
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-8">
+            <ul className="flex items-center gap-7">
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <button
+                    onClick={() => scrollTo(item.to)}
+                    className="relative text-[15px] font-medium text-black dark:text-white hover:text-accent dark:hover:text-accent transition-colors"
                   >
-                    <Button
-                      color="inherit"
+                    {item.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            >
+              {isDarkMode ? <HiSun className="w-5 h-5" /> : <HiMoon className="w-5 h-5" />}
+            </button>
+
+            <button
+              onClick={() => scrollTo('#contact')}
+              className="btn-pill"
+            >
+              <span className="btn-pill__icon">
+                <FaArrowRight className="w-3.5 h-3.5" />
+              </span>
+              Start Project
+            </button>
+          </nav>
+
+          {/* Mobile actions */}
+          <div className="flex items-center gap-1 md:hidden">
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              className="p-2 rounded-full text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            >
+              {isDarkMode ? <HiSun className="w-5 h-5" /> : <HiMoon className="w-5 h-5" />}
+            </button>
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="p-2 rounded-full text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            >
+              <HiMenu className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 bg-black/50 z-50"
+            />
+            <motion.aside
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.25 }}
+              className="fixed top-0 right-0 bottom-0 w-72 bg-white dark:bg-surface-darkAlt z-50 shadow-2xl flex flex-col"
+            >
+              <div className="flex items-center justify-between p-4 border-b border-black/10 dark:border-white/10">
+                <span className="font-nunito font-extrabold text-base text-black dark:text-white">
+                  SIMRAN<span className="text-accent">.</span>BARDHAN
+                </span>
+                <button
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Close menu"
+                  className="p-2 rounded-full text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+                >
+                  <HiX className="w-5 h-5" />
+                </button>
+              </div>
+              <ul className="flex flex-col p-2">
+                {navItems.map((item) => (
+                  <li key={item.name}>
+                    <button
                       onClick={() => {
-                        const element = document.querySelector(item.to);
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth' });
-                        }
+                        scrollTo(item.to);
+                        setMobileOpen(false);
                       }}
-                      sx={{
-                        fontSize: '1rem',
-                        fontWeight: 600,
-                        color: 'text.primary',
-                        textTransform: 'none',
-                        textDecoration: 'none',
-                        position: 'relative',
-                        padding: '12px 20px',
-                        borderRadius: 0,
-                        borderBottom: '2px solid transparent',
-                        transition: '0.4s',
-                        '&:hover': {
-                          backgroundColor: 'transparent',
-                          borderBottom: `2px solid ${theme.palette.text.primary}`,
-                          transform: 'translateY(-5px)',
-                        },
-                        '&:active': {
-                          transform: 'translateY(-5px)',
-                          transition: 'transform 0.1s ease',
-                        },
-                      }}
+                      className="w-full text-left px-4 py-3 rounded-lg font-medium text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                     >
                       {item.name}
-                    </Button>
-                  </Box>
+                    </button>
+                  </li>
                 ))}
-              </Box>
-              
-              <IconButton
-                onClick={toggleTheme}
-                sx={{
-                  background: isDarkMode 
-                    ? 'linear-gradient(135deg, #FF1B8D 0%, #FF6B35 100%)' 
-                    : 'linear-gradient(135deg, #000000 0%, #333333 100%)',
-                  color: '#FFFFFF',
-                  width: 48,
-                  height: 48,
-                  borderRadius: '50%',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    background: isDarkMode 
-                      ? 'linear-gradient(135deg, #E6186F 0%, #E55A2B 100%)' 
-                      : 'linear-gradient(135deg, #333333 0%, #555555 100%)',
-                    transform: 'translateY(-2px)',
-                    boxShadow: isDarkMode 
-                      ? '0 10px 30px rgba(255, 27, 141, 0.4)' 
-                      : '0 10px 30px rgba(0, 0, 0, 0.3)',
-                  },
-                }}
-              >
-                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
-            </Box>
-          )}
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        variant="temporary"
-        anchor="right"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
-      >
-        {drawer}
-      </Drawer>
+              </ul>
+              <div className="mt-auto p-4">
+                <button
+                  onClick={() => {
+                    scrollTo('#contact');
+                    setMobileOpen(false);
+                  }}
+                  className="btn-pill w-full justify-center"
+                >
+                  <span className="btn-pill__icon">
+                    <FaArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                  Start Project
+                </button>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };

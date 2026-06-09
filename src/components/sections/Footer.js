@@ -1,307 +1,140 @@
 import React from 'react';
-import { Box, Typography, Container, Grid, IconButton, Divider } from '@mui/material';
-import { GitHub, LinkedIn, Email, Favorite } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import {
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
+  FaInstagram,
+  FaHeart,
+  FaArrowRight,
+} from 'react-icons/fa';
+import {
+  sectionContainer,
+  fadeUp,
+  chipPop,
+  inViewport,
+} from '../../utils/motion';
+
+const socialLinks = [
+  { Icon: FaGithub, url: 'https://github.com/simran1362', label: 'GitHub' },
+  { Icon: FaLinkedin, url: 'https://www.linkedin.com/in/simran-bardhan/', label: 'LinkedIn' },
+  { Icon: FaInstagram, url: 'https://instagram.com/', label: 'Instagram' },
+  { Icon: FaEnvelope, url: 'mailto:simranbardhan13@gmail.com', label: 'Email' },
+];
+
+const quickLinks = [
+  { name: 'Home', href: '#hero' },
+  { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Footer = () => {
-  const socialLinks = [
-    {
-      icon: <GitHub />,
-      url: 'https://github.com/simran1362',
-      label: 'GitHub',
-    },
-    {
-      icon: <LinkedIn />,
-      url: 'https://www.linkedin.com/in/simran-bardhan/',
-      label: 'LinkedIn',
-    },
-    {
-      icon: <Email />,
-      url: 'mailto:simranbardhan13@gmail.com',
-      label: 'Email',
-    },
-  ];
-
-  const quickLinks = [
-    { name: 'Home', href: '#hero' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
-  const handleSocialClick = (url) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
+  const handleSocialClick = (url) => window.open(url, '_blank', 'noopener,noreferrer');
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: '#ffffff',
-        pt: 8,
-        pb: 4,
-        borderTop: '2px solid #e0e0e0',
-      }}
-    >
-      <Container maxWidth="xl">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-        >
-          <Grid container spacing={6}>
-            {/* Brand Section */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                variant="h3"
-                sx={{
-                  fontWeight: 700,
-                  mb: 3,
-                  color: '#2c3e50',
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                SIMRAN BARDHAN
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#666666',
-                  lineHeight: 1.6,
-                  mb: 4,
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                Software Developer specializing in MERN Stack, Next.js, and UI/UX Design. 
-                Passionate about creating innovative digital solutions and user experiences.
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2 }}>
-                {socialLinks.map((social, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <IconButton
-                      onClick={() => handleSocialClick(social.url)}
-                      sx={{
-                        color: '#666666',
-                        backgroundColor: '#f8f9fa',
-                        border: '2px solid #e0e0e0',
-                        borderRadius: '50%',
-                        width: 50,
-                        height: 50,
-                        transition: 'all 0.3s ease',
-                        '&:hover': {
-                          color: '#ffffff',
-                          backgroundColor: '#2c3e50',
-                          borderColor: '#2c3e50',
-                          transform: 'translateY(-3px)',
-                          boxShadow: '0 10px 20px rgba(44, 62, 80, 0.3)',
-                        },
-                      }}
-                      aria-label={social.label}
-                    >
-                      {social.icon}
-                    </IconButton>
-                  </motion.div>
-                ))}
-              </Box>
-            </Grid>
+    <footer className="bg-surface-dark text-white relative overflow-hidden">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-32 -right-32 w-[500px] h-[500px] blob-green opacity-60"
+      />
 
-            {/* Quick Links */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 600,
-                  mb: 3,
-                  color: '#2c3e50',
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                Quick Links
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {quickLinks.map((link, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: '#666666',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        fontFamily: '"Inter", sans-serif',
-                        fontSize: '1.1rem',
-                        '&:hover': {
-                          color: '#2c3e50',
-                          transform: 'translateX(10px)',
-                        },
-                      }}
-                      onClick={() => scrollToSection(link.href)}
-                    >
-                      → {link.name}
-                    </Typography>
-                  </motion.div>
-                ))}
-              </Box>
-            </Grid>
-
-            {/* Contact Info */}
-            <Grid item xs={12} md={4}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 600,
-                  mb: 3,
-                  color: '#2c3e50',
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                Get In Touch
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: '#666666',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 2,
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: '1.1rem',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        backgroundColor: '#2c3e50',
-                        color: '#ffffff',
-                        borderRadius: '50%',
-                        width: 30,
-                        height: 30,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Email sx={{ fontSize: 16 }} />
-                    </Box>
-                    simranbardhan13@gmail.com
-                  </Typography>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: '#666666',
-                      fontFamily: '"Inter", sans-serif',
-                      fontSize: '1.1rem',
-                    }}
-                  >
-                    Mumbai, Maharashtra
-                  </Typography>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: '#2c3e50',
-                      lineHeight: 1.6,
-                      fontFamily: '"Inter", sans-serif',
-                      fontWeight: 500,
-                    }}
-                  >
-                    Available for software development and UI/UX design opportunities.
-                  </Typography>
-                </motion.div>
-              </Box>
-            </Grid>
-          </Grid>
-
-          <Divider
-            sx={{
-              my: 6,
-              borderColor: '#e0e0e0',
-              borderWidth: 1,
-            }}
-          />
-
-          {/* Bottom Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                gap: 2,
-              }}
-            >
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#666666',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                © {new Date().getFullYear()} Simran Bardhan. Made with{' '}
-                <Favorite sx={{ fontSize: 18, color: '#e74c3c' }} /> and React
-              </Typography>
-
-              <Typography
-                variant="body1"
-                sx={{
-                  color: '#666666',
-                  fontFamily: '"Inter", sans-serif',
-                }}
-              >
-                All rights reserved.
-              </Typography>
-            </Box>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={inViewport}
+        variants={sectionContainer(0.1, 0.05)}
+        className="section-shell relative px-5 md:px-10 pt-20 pb-10"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8">
+          {/* Brand block */}
+          <motion.div variants={fadeUp} className="md:col-span-5">
+            <h3 className="font-nunito text-3xl md:text-4xl font-extrabold tracking-tight mb-4">
+              SIMRAN<span className="text-accent">.</span>BARDHAN
+            </h3>
+            <p className="text-base text-white/70 leading-relaxed mb-6 max-w-md">
+              Software Developer specializing in MERN Stack, Next.js, and UI/UX Design. Always
+              shipping, always learning.
+            </p>
+            <button onClick={() => scrollToSection('#contact')} className="btn-pill">
+              <span className="btn-pill__icon">
+                <FaArrowRight className="w-3.5 h-3.5" />
+              </span>
+              Start a Project
+            </button>
           </motion.div>
+
+          {/* Quick links */}
+          <motion.div variants={fadeUp} className="md:col-span-3">
+            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-white/60 mb-5">
+              Navigate
+            </h4>
+            <motion.ul
+              variants={sectionContainer(0.06, 0.05)}
+              className="flex flex-col gap-2.5"
+            >
+              {quickLinks.map((link) => (
+                <motion.li key={link.name} variants={fadeUp}>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-base text-white/80 hover:text-accent transition-colors flex items-center gap-2 group"
+                  >
+                    <FaArrowRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                    {link.name}
+                  </button>
+                </motion.li>
+              ))}
+            </motion.ul>
+          </motion.div>
+
+          {/* Get in touch */}
+          <motion.div variants={fadeUp} className="md:col-span-4">
+            <h4 className="text-sm font-bold uppercase tracking-[0.2em] text-white/60 mb-5">
+              Get in Touch
+            </h4>
+            <a
+              href="mailto:simranbardhan13@gmail.com"
+              className="block text-lg md:text-xl font-semibold text-white hover:text-accent transition-colors mb-4"
+            >
+              simranbardhan13@gmail.com
+            </a>
+            <p className="text-base text-white/70 mb-6">Mumbai, Maharashtra · Open to remote</p>
+
+            <motion.div variants={sectionContainer(0.06, 0.05)} className="flex gap-2">
+              {socialLinks.map(({ Icon, url, label }) => (
+                <motion.button
+                  key={label}
+                  variants={chipPop}
+                  type="button"
+                  aria-label={label}
+                  onClick={() => handleSocialClick(url)}
+                  className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:text-black hover:border-accent transition-colors"
+                >
+                  <Icon className="w-4 h-4" />
+                </motion.button>
+              ))}
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          variants={fadeUp}
+          className="mt-14 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3"
+        >
+          <p className="flex items-center gap-2 text-sm text-white/60">
+            © {new Date().getFullYear()} Simran Bardhan. Made with{' '}
+            <FaHeart className="w-3.5 h-3.5 text-brand-pink" /> and React.
+          </p>
+          <p className="text-sm text-white/60">All rights reserved.</p>
         </motion.div>
-      </Container>
-    </Box>
+      </motion.div>
+    </footer>
   );
 };
 
