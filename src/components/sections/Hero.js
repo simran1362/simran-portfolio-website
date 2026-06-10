@@ -31,7 +31,7 @@ import {
 const socials = [
   { Icon: FaGithub, label: 'GitHub', href: 'https://github.com/simran1362' },
   { Icon: FaLinkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/simran-bardhan/' },
-  { Icon: FaInstagram, label: 'Instagram', href: 'https://instagram.com/' },
+  { Icon: FaInstagram, label: 'Instagram', href: 'https://www.instagram.com/essssbeeee/' },
   { Icon: FaEnvelope, label: 'Email', href: 'mailto:simranbardhan13@gmail.com' },
 ];
 
@@ -87,7 +87,7 @@ const Hero = () => {
       <motion.div
         aria-hidden
         style={{ y: blobY }}
-        className="pointer-events-none absolute -top-40 -left-48 w-[640px] h-[640px] blur-2xl"
+        className="pointer-events-none absolute hidden md:block -top-40 -left-48 w-[640px] h-[640px] blur-2xl"
       >
         <MorphBlob className="w-full h-full" seed={7} opacity={0.4} />
       </motion.div>

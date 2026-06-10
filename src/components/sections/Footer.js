@@ -21,7 +21,7 @@ import MorphBlob from '../fx/MorphBlob';
 const socialLinks = [
   { Icon: FaGithub, url: 'https://github.com/simran1362', label: 'GitHub' },
   { Icon: FaLinkedin, url: 'https://www.linkedin.com/in/simran-bardhan/', label: 'LinkedIn' },
-  { Icon: FaInstagram, url: 'https://instagram.com/', label: 'Instagram' },
+  { Icon: FaInstagram, url: 'https://www.instagram.com/essssbeeee/', label: 'Instagram' },
   { Icon: FaEnvelope, url: 'mailto:simranbardhan13@gmail.com', label: 'Email' },
 ];
 

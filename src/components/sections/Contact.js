@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import {
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
   FaPaperPlane,
   FaCheckCircle,
+  FaExclamationCircle,
   FaArrowRight,
 } from 'react-icons/fa';
 import {
@@ -21,6 +23,10 @@ import { Textarea } from '../ui/textarea';
 import { fireConfettiFrom } from '../fx/confetti';
 import Magnetic from '../fx/Magnetic';
 import { Heart, ScribbleRing, Squiggle } from '../fx/Doodles';
+
+const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
 
 const contactInfo = [
   {
@@ -45,29 +51,73 @@ const contactInfo = [
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-  const [toastOpen, setToastOpen] = useState(false);
+  const [toast, setToast] = useState({ open: false, type: 'success', message: '' });
   const [planeFlying, setPlaneFlying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const submitRef = useRef(null);
 
   useEffect(() => {
-    if (!toastOpen) return undefined;
-    const t = setTimeout(() => setToastOpen(false), 5000);
+    if (!toast.open) return undefined;
+    const t = setTimeout(() => setToast((prev) => ({ ...prev, open: false })), 5000);
     return () => clearTimeout(t);
-  }, [toastOpen]);
+  }, [toast.open]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    fireConfettiFrom(submitRef.current, 48);
-    setPlaneFlying(true);
-    setTimeout(() => setPlaneFlying(false), 1200);
-    setToastOpen(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      // Surface a clear error during local dev if the .env.local is missing
+      // rather than silently appearing to succeed.
+      console.error(
+        'EmailJS env vars are not configured. Add REACT_APP_EMAILJS_SERVICE_ID, ' +
+        'REACT_APP_EMAILJS_TEMPLATE_ID and REACT_APP_EMAILJS_PUBLIC_KEY to .env.local and restart the dev server.',
+      );
+      setToast({
+        open: true,
+        type: 'error',
+        message: 'Email service not configured yet. Please try again later.',
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: formData.name,
+          email: formData.email,
+          title: formData.subject,
+          message: formData.message,
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY },
+      );
+
+      fireConfettiFrom(submitRef.current, 48);
+      setPlaneFlying(true);
+      setTimeout(() => setPlaneFlying(false), 1200);
+      setToast({
+        open: true,
+        type: 'success',
+        message: "Message sent! I'll get back to you soon.",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (err) {
+      console.error('EmailJS send failed:', err);
+      setToast({
+        open: true,
+        type: 'error',
+        message: "Couldn't send your message. Please try again or email me directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -213,7 +263,12 @@ const Contact = () => {
 
           <motion.div variants={fadeUp} className="text-center">
             <Magnetic strength={0.3}>
-              <button ref={submitRef} type="submit" className="btn-pill btn-pill--solid relative overflow-visible">
+              <button
+                ref={submitRef}
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-pill btn-pill--solid relative overflow-visible disabled:opacity-60 disabled:cursor-not-allowed"
+              >
                 <span className="btn-pill__icon relative">
                   <motion.span
                     className="inline-flex"
@@ -231,7 +286,7 @@ const Contact = () => {
                     <FaPaperPlane className="w-3.5 h-3.5" />
                   </motion.span>
                 </span>
-                Send Message
+                {isSubmitting ? 'Sending…' : 'Send Message'}
               </button>
             </Magnetic>
           </motion.div>
@@ -240,19 +295,27 @@ const Contact = () => {
 
       {/* Toast */}
       <AnimatePresence>
-        {toastOpen && (
+        {toast.open && (
           <motion.div
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: 'spring', stiffness: 320, damping: 22 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 bg-accent text-black px-5 py-3 rounded-full shadow-card font-medium"
-            role="status"
+            className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[1000] flex items-center gap-3 px-5 py-3 rounded-full shadow-card font-medium ${
+              toast.type === 'success'
+                ? 'bg-accent text-black'
+                : 'bg-red-500 text-white'
+            }`}
+            role={toast.type === 'success' ? 'status' : 'alert'}
           >
-            <FaCheckCircle className="w-5 h-5" />
-            <span>Message sent! I'll get back to you soon.</span>
+            {toast.type === 'success' ? (
+              <FaCheckCircle className="w-5 h-5" />
+            ) : (
+              <FaExclamationCircle className="w-5 h-5" />
+            )}
+            <span>{toast.message}</span>
             <button
-              onClick={() => setToastOpen(false)}
+              onClick={() => setToast((prev) => ({ ...prev, open: false }))}
               aria-label="Dismiss"
               className="ml-2 opacity-70 hover:opacity-100"
             >
