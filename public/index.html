@@ -6,6 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Simran Bardhan</title>
   <link rel="icon" href="./code.png" type="image/x-icon"/>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('darkMode');
+        var isDark = saved ? JSON.parse(saved) : true;
+        var root = document.documentElement;
+        if (isDark) {
+          root.classList.add('dark');
+          root.setAttribute('data-theme', 'dark');
+        } else {
+          root.setAttribute('data-theme', 'light');
+        }
+      } catch (e) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 </head>
 
 <body>

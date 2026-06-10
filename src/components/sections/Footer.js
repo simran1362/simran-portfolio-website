@@ -14,6 +14,9 @@ import {
   chipPop,
   inViewport,
 } from '../../utils/motion';
+import VelocityMarquee from '../fx/VelocityMarquee';
+import Magnetic from '../fx/Magnetic';
+import MorphBlob from '../fx/MorphBlob';
 
 const socialLinks = [
   { Icon: FaGithub, url: 'https://github.com/simran1362', label: 'GitHub' },
@@ -41,15 +44,27 @@ const Footer = () => {
     <footer className="bg-surface-dark text-white relative overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 -right-32 w-[500px] h-[500px] blob-green opacity-60"
-      />
+        className="pointer-events-none absolute -top-32 -right-32 w-[500px] h-[500px] blur-2xl"
+      >
+        <MorphBlob className="w-full h-full" seed={42} opacity={0.25} />
+      </div>
+
+      {/* Giant outlined name — speed and direction follow scroll velocity */}
+      <div className="relative pt-16 pb-4 select-none" aria-hidden>
+        <VelocityMarquee baseVelocity={-1.6} className="mask-fade-x">
+          <span className="font-nunito font-extrabold uppercase text-[18vw] md:text-[9rem] lg:text-[11rem] leading-none tracking-tight text-stroke text-white/25 pr-8">
+            SIMRAN BARDHAN
+          </span>
+          <span className="text-accent text-[10vw] md:text-7xl lg:text-8xl leading-none pr-8">✦</span>
+        </VelocityMarquee>
+      </div>
 
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={inViewport}
         variants={sectionContainer(0.1, 0.05)}
-        className="section-shell relative px-5 md:px-10 pt-20 pb-10"
+        className="section-shell relative px-5 md:px-10 pt-10 pb-10"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 text-center lg:text-left">
           {/* Brand block */}
@@ -61,12 +76,14 @@ const Footer = () => {
               Software Developer specializing in MERN Stack, Next.js, and UI/UX Design. Always
               shipping, always learning.
             </p>
-            <button onClick={() => scrollToSection('#contact')} className="btn-pill">
-              <span className="btn-pill__icon">
-                <FaArrowRight className="w-3.5 h-3.5" />
-              </span>
-              Start a Project
-            </button>
+            <Magnetic strength={0.3}>
+              <button onClick={() => scrollToSection('#contact')} className="btn-pill">
+                <span className="btn-pill__icon">
+                  <FaArrowRight className="w-3.5 h-3.5" />
+                </span>
+                Start a Project
+              </button>
+            </Magnetic>
           </motion.div>
 
           {/* Quick links */}
@@ -108,16 +125,18 @@ const Footer = () => {
 
             <motion.div variants={sectionContainer(0.06, 0.05)} className="flex gap-2 justify-center lg:justify-start">
               {socialLinks.map(({ Icon, url, label }) => (
-                <motion.button
-                  key={label}
-                  variants={chipPop}
-                  type="button"
-                  aria-label={label}
-                  onClick={() => handleSocialClick(url)}
-                  className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:text-black hover:border-accent transition-colors"
-                >
-                  <Icon className="w-4 h-4" />
-                </motion.button>
+                <motion.div key={label} variants={chipPop}>
+                  <Magnetic strength={0.45}>
+                    <button
+                      type="button"
+                      aria-label={label}
+                      onClick={() => handleSocialClick(url)}
+                      className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-accent hover:text-black hover:border-accent transition-colors"
+                    >
+                      <Icon className="w-4 h-4" />
+                    </button>
+                  </Magnetic>
+                </motion.div>
               ))}
             </motion.div>
           </motion.div>
@@ -130,7 +149,15 @@ const Footer = () => {
           <p className="inline-flex flex-wrap items-center justify-center gap-1.5 text-sm text-white/60">
             <span>© {new Date().getFullYear()} Simran Bardhan.</span>
             <span className="inline-flex items-center gap-1.5">
-              Made with <FaHeart className="w-3.5 h-3.5 text-brand-pink" /> and React.
+              Made with{' '}
+              <motion.span
+                className="inline-flex"
+                animate={{ scale: [1, 1.25, 1] }}
+                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <FaHeart className="w-3.5 h-3.5 text-brand-pink" />
+              </motion.span>{' '}
+              and React.
             </span>
           </p>
           <p className="text-sm text-white/60">All rights reserved.</p>

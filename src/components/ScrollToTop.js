@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { FaArrowUp } from 'react-icons/fa';
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const ringProgress = useSpring(scrollYProgress, { stiffness: 140, damping: 28 });
 
   useEffect(() => {
     const onScroll = () => {
@@ -44,10 +46,28 @@ const ScrollToTop = () => {
           transition={{ type: 'spring', stiffness: 260, damping: 22 }}
           className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 group"
         >
-          <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-black text-accent shadow-card border-2 border-black dark:border-accent overflow-hidden">
+          <span className="relative flex items-center justify-center w-12 h-12 md:w-14 md:h-14 rounded-full bg-black text-accent shadow-card overflow-hidden">
             <span className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
             <FaArrowUp className="relative w-4 h-4 md:w-5 md:h-5 group-hover:text-black transition-colors duration-300" />
           </span>
+          {/* Scroll-progress ring */}
+          <svg
+            viewBox="0 0 100 100"
+            className="absolute -inset-1 w-[calc(100%+8px)] h-[calc(100%+8px)] -rotate-90 pointer-events-none"
+            aria-hidden
+          >
+            <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" strokeWidth="5" className="text-black/10 dark:text-white/15" />
+            <motion.circle
+              cx="50"
+              cy="50"
+              r="46"
+              fill="none"
+              stroke="#9ACD32"
+              strokeWidth="5"
+              strokeLinecap="round"
+              style={{ pathLength: ringProgress }}
+            />
+          </svg>
         </motion.button>
       )}
     </AnimatePresence>

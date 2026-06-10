@@ -13,6 +13,7 @@ import ExperienceTimeline from '../ExperienceTimeline';
 
 // Top row: companies, communities, programs Simran has been part of.
 const trackOne = [
+  { name: 'NYU Tandon · MS CS (Incoming)', solid: true },
   { name: 'Apollo Global Management', solid: true },
   { name: 'SigmaRed Technologies' },
   { name: 'Safwhigre' },
@@ -104,7 +105,11 @@ const Experience = () => {
           >
             B-Tech in Computer Engineering with Honours in Intelligent Computing from Dwarkadas
             Jivanlal Sanghvi College of Engineering, Mumbai. Hands-on across full-stack development
-            and UI/UX design.
+            and UI/UX design — and heading to{' '}
+            <strong className="text-black dark:text-white">
+              NYU Tandon School of Engineering
+            </strong>{' '}
+            next for an M.S. in Computer Science.
           </motion.p>
         </motion.div>
 

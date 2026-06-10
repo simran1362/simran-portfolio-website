@@ -17,6 +17,23 @@ import {
 
 const experiences = [
   {
+    label: '2026',
+    sub: 'Incoming',
+    period: 'Sep 2026 — Onwards',
+    company: 'NYU Tandon School of Engineering',
+    role: 'M.S. Computer Science · Incoming Student',
+    location: 'Brooklyn, New York',
+    body:
+      'Heading to NYU Tandon for a Master of Science in Computer Science — diving deeper into systems, ML and applied research, while staying close to product, design and the rapidly evolving AI tooling space.',
+    highlights: [
+      'Focus on advanced systems, ML and applied AI coursework',
+      'Building on a full-stack + design foundation from undergrad and Apollo',
+      'Excited to collaborate across NYC\'s research and product ecosystem',
+    ],
+    Icon: FaGraduationCap,
+    accent: '#7C3AED',
+  },
+  {
     label: '2024',
     sub: 'Jun · Present',
     period: 'Jun 2024 — Present',

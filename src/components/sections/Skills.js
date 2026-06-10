@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { animate, stagger } from 'animejs';
 import { FaReact, FaNodeJs, FaPython, FaFigma, FaCheck } from 'react-icons/fa';
 import {
   SiMongodb,
@@ -25,6 +26,7 @@ import {
   slideInRight,
   inViewport,
 } from '../../utils/motion';
+import { Burst, Sparkle, Squiggle } from '../fx/Doodles';
 
 const ICON_SIZE = 28;
 
@@ -89,10 +91,52 @@ const skills = [
 ];
 
 const Skills = () => {
+  const gridRef = useRef(null);
+
+  // anime.js: icon tiles pop in with an elastic stagger sweeping out from
+  // the center of the grid once the section scrolls into view.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return undefined;
+    const tiles = grid.querySelectorAll('[data-skill-icon]');
+    if (!tiles.length) return undefined;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      tiles.forEach((t) => {
+        t.style.transform = 'none';
+        t.style.opacity = '1';
+      });
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          animate(tiles, {
+            scale: [0, 1],
+            rotate: { from: (el, i) => (i % 2 === 0 ? -30 : 30), to: 0 },
+            opacity: [0, 1],
+            duration: 900,
+            delay: stagger(45, { from: 'center', start: 350 }),
+            ease: 'outElastic(1, .6)',
+          });
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="skills" className="section-pad bg-white dark:bg-surface-dark">
       <div className="section-shell">
         <div className="panel-dark">
+          {/* Corner doodles */}
+          <Burst className="absolute top-8 right-8 w-12 h-12 text-accent/60 hidden md:block" delay={0.4} />
+          <Squiggle className="absolute bottom-8 right-12 w-32 h-6 text-white/15 hidden lg:block" delay={0.8} />
+
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -115,10 +159,15 @@ const Skills = () => {
                 >
                   My Extensive
                   <br />
-                  List of <span className="pill-highlight pill-highlight--accent">Skills</span>
+                  List of{' '}
+                  <span className="relative inline-block">
+                    <span className="pill-highlight pill-highlight--accent">Skills</span>
+                    <Sparkle className="absolute -top-7 -right-7 w-9 h-9 text-accent" delay={0.9} />
+                  </span>
                 </motion.h2>
 
                 <motion.div
+                  ref={gridRef}
                   variants={sectionContainer(0.1, 0.1)}
                   className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5"
                 >
@@ -126,15 +175,18 @@ const Skills = () => {
                     <motion.div
                       key={skill.title}
                       variants={cardPop}
-                      whileHover={{ rotate: 4, y: -6 }}
-                      className="bg-surface-darkAlt2 rounded-3xl p-6 h-full flex flex-col border border-white/5 transition-shadow hover:shadow-card"
+                      whileHover={{ rotate: 2, y: -8, scale: 1.02 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 18 }}
+                      className="group bg-surface-darkAlt2 rounded-3xl p-6 h-full flex flex-col border border-white/5 transition-shadow hover:shadow-card hover:border-accent/40"
                     >
                       <div className="flex flex-wrap gap-2 items-center mb-5">
                         {skill.icons.map(({ Icon, color, label }, iconIdx) => (
                           <div
                             key={iconIdx}
+                            data-skill-icon
                             title={label}
-                            className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10"
+                            style={{ opacity: 0, transform: 'scale(0)' }}
+                            className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 border border-white/10 transition-colors group-hover:border-white/25 group-hover:animate-wiggle"
                           >
                             <Icon size={ICON_SIZE} color={color} />
                           </div>
