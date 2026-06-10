@@ -45,7 +45,10 @@
 
   /* Hero / generic CTA with green circular icon prefix */
   .btn-pill {
-    @apply inline-flex items-center gap-2 pl-1.5 pr-5 py-1.5 rounded-full border-2 border-black text-black font-semibold transition-all duration-300 hover:-translate-y-0.5;
+    /* Mobile: symmetric 6px padding so full-width buttons read as truly
+       centered. From sm+ the right padding opens up so the trailing label
+       balances visually against the leading colored icon pill. */
+    @apply inline-flex items-center gap-2 pl-1.5 pr-1.5 sm:pr-5 py-1.5 rounded-full border-2 border-black text-black font-semibold transition-all duration-300 hover:-translate-y-0.5;
     background: white;
   }
   .btn-pill__icon {

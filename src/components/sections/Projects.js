@@ -60,6 +60,7 @@ const projects = [
       'Modern interaction patterns for AI/security workflows',
     ],
     technologies: ['React', 'TypeScript', 'UI/UX'],
+    link: 'https://www.sigmared.ai/',
     type: 'web',
     accent: '#9ACD32',
     bg: 'linear-gradient(135deg, #C5E869 0%, #9ACD32 100%)',
@@ -184,9 +185,9 @@ const Projects = () => {
               whileHover={{ y: -8 }}
               className="group flex flex-col rounded-3xl overflow-hidden border border-black/5 dark:border-white/10 bg-surface-lightAlt dark:bg-surface-darkAlt shadow-soft"
             >
-              {/* Visual */}
+              {/* Visual banner — hidden on mobile, shown from sm+ */}
               <div
-                className="relative h-48 flex items-end p-5"
+                className="relative h-48 hidden sm:flex items-end p-5"
                 style={{ background: project.bg }}
               >
                 {project.award && (

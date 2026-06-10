@@ -163,7 +163,7 @@ const ExperienceTimeline = () => {
       className="relative"
       style={{ height: `${experiences.length * 85}vh` }}
     >
-      <div className="sticky top-0 h-screen flex items-center py-8 md:py-12">
+      <div className="sticky top-0 h-screen flex items-center py-4 md:py-12">
         <div className="section-shell w-full">
           <div className="panel-dark relative overflow-hidden">
             {/* Decorative accent blob — picks up the active experience color */}
@@ -187,10 +187,10 @@ const ExperienceTimeline = () => {
               </span>
             </div>
 
-            <div className="grid grid-cols-12 gap-6 md:gap-10 lg:gap-12 relative z-10">
-              {/* Year rail */}
-              <div className="col-span-12 md:col-span-4 lg:col-span-3">
-                <div className="flex md:flex-col gap-4 md:gap-2 overflow-x-auto md:overflow-visible -mx-2 md:mx-0 px-2 md:px-0 pb-2 md:pb-0">
+            <div className="grid grid-cols-12 gap-6 lg:gap-12 relative z-10">
+              {/* Year rail — horizontal scroll on mobile/tablet, vertical from lg+ */}
+              <div className="col-span-12 lg:col-span-3">
+                <div className="flex lg:flex-col gap-4 lg:gap-2 overflow-x-auto lg:overflow-visible -mx-2 lg:mx-0 px-2 lg:px-0 pb-2 lg:pb-0">
                   {experiences.map((e, i) => {
                     const isActive = i === active;
                     return (
@@ -198,11 +198,11 @@ const ExperienceTimeline = () => {
                         key={`${e.label}-${i}`}
                         type="button"
                         onClick={() => scrollToIndex(i)}
-                        className="text-left flex md:flex-row items-baseline md:items-center gap-3 group shrink-0 md:shrink py-2 md:py-2.5"
+                        className="text-left flex lg:flex-row items-baseline lg:items-center gap-3 group shrink-0 lg:shrink py-2 lg:py-2.5"
                       >
-                        {/* Marker dot — mobile hidden, desktop visible */}
+                        {/* Marker dot — only on lg+ vertical rail */}
                         <span
-                          className={`hidden md:flex w-2.5 h-2.5 rounded-full transition-all ${
+                          className={`hidden lg:flex w-2.5 h-2.5 rounded-full transition-all ${
                             isActive
                               ? 'scale-125'
                               : 'bg-white/15 group-hover:bg-white/30'
@@ -212,13 +212,13 @@ const ExperienceTimeline = () => {
                         <span
                           className={`block font-bold leading-none transition-all whitespace-nowrap ${
                             isActive
-                              ? 'text-2xl md:text-4xl text-white'
-                              : 'text-base md:text-2xl text-white/25 group-hover:text-white/55'
+                              ? 'text-2xl md:text-3xl lg:text-4xl text-white'
+                              : 'text-base md:text-xl lg:text-2xl text-white/25 group-hover:text-white/55'
                           }`}
                         >
                           {e.label}
                           <span
-                            className={`hidden md:inline-block ml-2 align-middle text-[10px] tracking-widest font-semibold uppercase transition-colors ${
+                            className={`hidden lg:inline-block ml-2 align-middle text-[10px] tracking-widest font-semibold uppercase transition-colors ${
                               isActive ? 'text-white/60' : 'text-white/20'
                             }`}
                           >
@@ -232,7 +232,7 @@ const ExperienceTimeline = () => {
               </div>
 
               {/* Content */}
-              <div className="col-span-12 md:col-span-8 lg:col-span-9 min-h-[420px] md:min-h-[460px]">
+              <div className="col-span-12 lg:col-span-9 min-h-[420px] md:min-h-[460px]">
                 <AnimatePresence mode="wait">
                   <motion.article
                     key={active}

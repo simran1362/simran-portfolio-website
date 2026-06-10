@@ -7,11 +7,22 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > window.innerHeight * 0.6);
+      const scrolledFromTop = window.scrollY > window.innerHeight * 0.6;
+      // Hide when user reaches the very bottom of the page so the button
+      // doesn't overlap with footer copy / signature.
+      const distanceToBottom =
+        document.documentElement.scrollHeight -
+        (window.scrollY + window.innerHeight);
+      const nearBottom = distanceToBottom < 120;
+      setVisible(scrolledFromTop && !nearBottom);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   const handleClick = () => {

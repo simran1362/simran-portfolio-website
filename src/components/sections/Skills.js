@@ -16,18 +16,11 @@ import {
   SiGit,
   SiPostman,
 } from 'react-icons/si';
-import {
-  HiCode,
-  HiChevronLeft,
-  HiChevronRight,
-  HiCube,
-  HiLightningBolt,
-} from 'react-icons/hi';
+import { HiCode, HiCube, HiLightningBolt } from 'react-icons/hi';
 import {
   sectionContainer,
   eyebrowSlide,
   headlineReveal,
-  fadeUp,
   cardPop,
   slideInRight,
   inViewport,
@@ -113,9 +106,9 @@ const Skills = () => {
               </span>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
               {/* Left column: title + cards */}
-              <div className="md:col-span-8">
+              <div className="lg:col-span-8">
                 <motion.h2
                   variants={headlineReveal}
                   className="font-bold tracking-tight text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] text-white mb-10"
@@ -127,7 +120,7 @@ const Skills = () => {
 
                 <motion.div
                   variants={sectionContainer(0.1, 0.1)}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5"
+                  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-5"
                 >
                   {skills.map((skill) => (
                     <motion.div
@@ -157,27 +150,13 @@ const Skills = () => {
               {/* Right column */}
               <motion.div
                 variants={slideInRight}
-                className="md:col-span-4 flex flex-col justify-between gap-10 md:text-right md:items-end"
+                className="lg:col-span-4 flex flex-col justify-between gap-6 lg:text-right lg:items-end"
               >
-                <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-md md:ml-auto">
-                  Specialized in MERN-stack development, UI/UX design, and machine learning —
-                  building innovative solutions with modern technologies and a designer's eye.
+                <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-md lg:ml-auto">
+                  Specialized in enterprise web at <strong className="text-white">Apollo Global Management</strong>{' '}
+                  with AEM and Web Components, plus full-stack MERN, AI / automation tooling, and a
+                  designer's eye for clean UI.
                 </p>
-
-                <motion.div variants={fadeUp} className="flex md:justify-end gap-3">
-                  <button
-                    aria-label="Previous"
-                    className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center transition-colors hover:border-accent hover:bg-accent/10"
-                  >
-                    <HiChevronLeft className="w-5 h-5 text-white" />
-                  </button>
-                  <button
-                    aria-label="Next"
-                    className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center transition-colors hover:border-accent hover:bg-accent/10"
-                  >
-                    <HiChevronRight className="w-5 h-5 text-white" />
-                  </button>
-                </motion.div>
               </motion.div>
             </div>
           </motion.div>

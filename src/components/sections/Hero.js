@@ -56,10 +56,10 @@ const Hero = () => {
         className="section-shell section-pad relative z-10"
       >
         <div className="grid grid-cols-12 gap-6 items-start">
-          {/* Vertical social rail (md+) */}
+          {/* Vertical social rail (lg+) */}
           <motion.aside
             variants={fadeUp}
-            className="hidden md:flex col-span-1 flex-col items-center gap-5 pt-6"
+            className="hidden lg:flex col-span-1 flex-col items-center gap-5 pt-6"
           >
             <motion.div
               variants={sectionContainer(0.08, 0)}
@@ -90,7 +90,7 @@ const Hero = () => {
           </motion.aside>
 
           {/* Main column */}
-          <div className="col-span-12 md:col-span-11">
+          <div className="col-span-12 lg:col-span-11 text-center lg:text-left">
             <motion.h1
               variants={headlineReveal}
               className="font-bold tracking-tight text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] leading-[1.05] text-black dark:text-white"
@@ -101,9 +101,9 @@ const Hero = () => {
 
             <motion.div
               variants={fadeUp}
-              className="mt-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-start"
+              className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
             >
-              <p className="md:col-span-7 lg:col-span-6 md:col-start-6 text-base md:text-lg text-ink-lightMuted dark:text-ink-darkMuted leading-relaxed max-w-[640px]">
+              <p className="lg:col-span-7 lg:col-start-6 text-base md:text-lg text-ink-lightMuted dark:text-ink-darkMuted leading-relaxed max-w-[640px] mx-auto lg:mx-0">
                 Hi, I'm <strong className="text-black dark:text-white">Simran Bardhan</strong> —
                 Mumbai-based, currently building enterprise web at{' '}
                 <strong className="text-black dark:text-white">Apollo Global Management</strong>{' '}
@@ -113,11 +113,11 @@ const Hero = () => {
 
             <motion.div
               variants={fadeUp}
-              className="mt-10 flex flex-wrap items-center gap-4"
+              className="mt-10 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4"
             >
               <button
                 onClick={() => window.open('mailto:simranbardhan13@gmail.com', '_blank')}
-                className="btn-pill"
+                className="btn-pill w-full sm:w-auto justify-center"
               >
                 <span className="btn-pill__icon">
                   <HiPhone className="w-4 h-4" />
@@ -130,7 +130,7 @@ const Hero = () => {
                   const el = document.querySelector('#projects');
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="btn-pill btn-pill--solid"
+                className="btn-pill btn-pill--solid w-full sm:w-auto justify-center"
               >
                 <span className="btn-pill__icon">
                   <FaArrowRight className="w-3.5 h-3.5" />
@@ -139,10 +139,10 @@ const Hero = () => {
               </button>
             </motion.div>
 
-            {/* Mobile-only social row */}
+            {/* Mobile + tablet social row (desktop has the vertical rail) */}
             <motion.div
               variants={fadeUp}
-              className="md:hidden mt-10 flex items-center gap-2"
+              className="lg:hidden mt-10 flex items-center justify-center gap-2"
             >
               {socials.map(({ Icon, label, href }) => (
                 <button

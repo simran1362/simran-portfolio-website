@@ -3,8 +3,11 @@
 
 export const easeOut = [0.22, 1, 0.36, 1];
 
-// Default viewport — wait until ~20% of the element is in view, fire once.
-export const inViewport = { once: true, amount: 0.2 };
+// Default viewport — fire once, as soon as any part of the element enters
+// the viewport. We avoid a fixed `amount` fraction because containers that
+// are taller than ~5× the viewport (e.g. a 1-col mobile grid of cards) can
+// never reach a 20% threshold, leaving children stuck at opacity 0.
+export const inViewport = { once: true, amount: 'some' };
 
 // Section container — staggers its children's `visible` state.
 export const sectionContainer = (stagger = 0.12, delayChildren = 0.05) => ({

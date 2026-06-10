@@ -114,7 +114,7 @@ const Experience = () => {
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
           variants={sectionContainer(0.08, 0.1)}
-          className="mt-16 mb-24"
+          className="mt-16 mb-4 lg:mb-24"
         >
           <motion.h3
             variants={fadeUp}
