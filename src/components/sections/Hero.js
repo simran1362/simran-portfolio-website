@@ -103,7 +103,7 @@ const Hero = () => {
               variants={fadeUp}
               className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
             >
-              <p className="lg:col-span-7 lg:col-start-6 text-base md:text-lg text-ink-lightMuted dark:text-ink-darkMuted leading-relaxed max-w-[640px] mx-auto lg:mx-0">
+              <p className="lg:col-span-7 text-base md:text-lg text-ink-lightMuted dark:text-ink-darkMuted leading-relaxed max-w-[640px] mx-auto lg:mx-0">
                 Hi, I'm <strong className="text-black dark:text-white">Simran Bardhan</strong> —
                 Mumbai-based, currently building enterprise web at{' '}
                 <strong className="text-black dark:text-white">Apollo Global Management</strong>{' '}

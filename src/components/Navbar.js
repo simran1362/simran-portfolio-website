@@ -54,7 +54,7 @@ const Navbar = () => {
           </button>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8">
             <ul className="flex items-center gap-7">
               {navItems.map((item) => (
                 <li key={item.name}>
@@ -88,7 +88,7 @@ const Navbar = () => {
           </nav>
 
           {/* Mobile actions */}
-          <div className="flex items-center gap-1 md:hidden">
+          <div className="flex items-center gap-1 lg:hidden">
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"

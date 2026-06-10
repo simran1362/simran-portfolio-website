@@ -187,7 +187,7 @@ const Projects = () => {
             >
               {/* Visual banner — hidden on mobile, shown from sm+ */}
               <div
-                className="relative h-48 hidden sm:flex items-end p-5"
+                className="relative h-48 hidden lg:flex items-end p-5"
                 style={{ background: project.bg }}
               >
                 {project.award && (
